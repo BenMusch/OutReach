@@ -57,9 +57,9 @@ class User < ApplicationRecord
     {}
   end
 
-  def log_voter!(sos_id)
+  def log_voter!(reach_id)
     seen = seen_voters
-    seen[sos_id] = true
+    seen[reach_id] = true
     set_voters!(seen)
   end
 

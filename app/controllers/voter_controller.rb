@@ -14,7 +14,7 @@ class VoterController < ApplicationController
   def next
     call_list = current_user.call_list
     voters_seen = current_user.seen_voters
-    next_voter = call_list.find { |v| !voters_seen[v.sos_id.to_s] }
+    next_voter = call_list.find { |v| !voters_seen[v.reach_id] }
 
     if params[:skip] && voter
       record_in_reach(Rails.configuration.reach.responses[:skip])
