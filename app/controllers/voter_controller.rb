@@ -86,7 +86,7 @@ class VoterController < ApplicationController
     return unless voter.relationships.where(user: current_user).empty?
     same_household_voter = voter.
       household_members.
-      where(sos_id: current_user.relationships.select(:voter_sos_id)).
+      where(reach_id: current_user.relationships.select(:voter_reach_id)).
       first
 
     if same_household_voter
