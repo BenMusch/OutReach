@@ -51,10 +51,12 @@ ActiveRecord::Schema.define(version: 2022_07_03_211156) do
     t.string "voting_state"
     t.string "voting_city"
     t.string "voting_zip"
-    t.string "voter_registration"
+    t.string "party_id"
+    t.integer "voter_registration_status"
     t.json "voting_history"
     t.string "voting_status"
     t.integer "voting_address_id"
+    t.string "vote_plan"
     t.integer "voter_data_status"
     t.integer "last_call_status", default: 0, null: false
     t.integer "support_score"

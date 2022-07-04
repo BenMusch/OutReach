@@ -8,6 +8,7 @@ class Voter < ApplicationRecord
 
   enum last_call_status: [ :not_yet_called, :should_call_again, :do_not_call ]
   enum voter_data_status: [:reach_match, :manual_match, :unmatched]
+  enum voter_registration_status: [:registered_in_district, :registered_in_state, :registereted_out_of_state, :unregistered]
 
   CALL_STATUS_TEXT = {
     not_yet_called: "Not called",

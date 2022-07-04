@@ -28,10 +28,12 @@ class UpdateVotersFields < ActiveRecord::Migration[6.0]
       t.string :voting_zip
 
       # voting info
-      t.string :voter_registration
+      t.string :party_id
+      t.integer :voter_registration_status
       t.json :voting_history
       t.string :voting_status
       t.integer :voting_address_id
+      t.string :vote_plan
 
       t.integer :voter_data_status
       t.integer :last_call_status, default: 0, null: false
