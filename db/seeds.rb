@@ -131,7 +131,7 @@ User.all.each do |user|
   begin
     Relationship.create!(
       user_id: user.id,
-      voter_sos_id: voter.sos_id,
+      voter_reach_id: voter.reach_id,
       relationship: "Me",
     )
   rescue
@@ -145,7 +145,7 @@ User.all.each do |user|
         voter_reach_id: Voter.all.sample.reach_id,
         relationship: "Friend",
       )
-    rescue
+    rescue ActiveRecord::RecordNotUnique
       puts "re-creating due to unique constrant violation..."
     end
   end

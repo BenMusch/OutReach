@@ -26,15 +26,7 @@ class Voter < ApplicationRecord
   end
 
   def polling_place_display
-    if vote_location_address.present?
-      display = ""
-      display += "#{vote_location_name.titleize} | " if vote_location_name.present?
-      display += vote_location_address.titleize
-      display += ", #{vote_location_city}" if vote_location_city.present?
-      display += " (#{vote_location_hours})" if vote_location_hours.present?
-    else
-      nil
-    end
+    nil # TODO: implement voting location search if possible
   end
 
   def voting_status_display
@@ -47,9 +39,5 @@ class Voter < ApplicationRecord
 
   def display_name
     "#{first_name.capitalize} #{last_name.capitalize}"
-  end
-
-  def household_members
-    Voter.where(household_id: household_id).where.not(sos_id: sos_id)
   end
 end

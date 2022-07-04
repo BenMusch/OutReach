@@ -73,7 +73,6 @@
                   <th>Name</th>
                   <th>Number</th>
                   <th>Vote Status</th>
-                  <th class="has-text-centered">Voted in November</th>
                   <th>Vote plan</th>
                   <th>Call Status</th>
                 </tr>
@@ -86,8 +85,7 @@
                         <%= link_to v.display_name, voter_path(v) %>
                       </td>
                       <td class="nowrap"><%= v.phone_number_display %></td>
-                      <td><%= v.voting_status_display || "Unavailable" %></td>
-                      <td class="has-text-centered"><%= v.voted_general ? '✅' : '❌' %></td>
+                      <td><%= v.voting_status ? v.voting_status_display : "Unavailable" %></td>
                       <td><%= v.vote_plan || "Unavailable" %></td>
                       <td><%= v.last_call_status_display %></td>
                     </tr>

@@ -15,7 +15,7 @@ class User < ApplicationRecord
   end
 
   def call_list
-    relationship_call_list + household_member_call_list
+    relationship_call_list
   end
 
   def non_self_voters
@@ -74,6 +74,6 @@ class User < ApplicationRecord
     Voter.
       where(reach_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_reach_id)).
       order(:reach_id).
-      where(last_call_status: [:not_yet_called, :should_call_again]).
+      where(last_call_status: [:not_yet_called, :should_call_again])
   end
 end
