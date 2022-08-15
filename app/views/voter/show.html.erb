@@ -116,26 +116,33 @@
           <div id="edit-voter-profile" style="padding-top: 10px;">
             <div id="edit-voter-profile-info">
               <div class="box contacts">
-
-                <div class="field">
-                  <label class="label">Email</label>
-                    <div class="control has-icons-left has-icons-right">
-                      <%= form_for @voter do |f| %>
-                        <%= f.email_field :email, class: "input" %>
-                        <%= f.select :voter_registration_status, options_for_select(Voter.voter_registration_statuses.map {|k, v| [k.titleize, Voter.voter_registration_statuses.key(v)]}, @voter.voter_registration_status) %>
-                        <%= f.text_area :notes, class: "textarea", placeholder: "Place notes here", style: "margin-top: 10px;" %>
-                        <%= f.submit "Save changes", class:"button is-success is-medium is-light", style: "margin-top: 10px;" %>
-                      <% end %>
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
-                      </span>
-                    </div>
+                <%= form_for @voter do |f| %>
+                <div class="table-container">
+                  <table class="table is-fullwidth"> 
+                    <tr>
+                      <th>Enter email</th>
+                      <td style='border:none;'><%= f.email_field :email, class: "input"%></td>
+                    </tr>
+                    <tr>
+                      <th>Registration status</th>
+                      <td style='border:none;'><%= f.select :voter_registration_status, options_for_select(Voter.voter_registration_statuses.map {|k, v| [k.titleize, Voter.voter_registration_statuses.key(v)]}, @voter.voter_registration_status) %></td>
+                    </tr>
+                    <tr>
+                      <th>Party ID</th>
+                      <td style='border:none;'><%= f.select :party_id, options_for_select([ "Democrat", "Republican", "Independent", "Green", "Other" ], @voter.party_id) %></td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td style='border:none;'><%= f.text_area :notes, class: "textarea", placeholder: "Place notes here", style: "margin-top: 10px;" %></td>
+                    </tr>
+                  </table>
+                <%= f.submit "Save changes", class:"button is-success is-medium is-light", style: "margin-top: 10px;" %>
+                <% end %>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- keeping this for showing off the UI in demos
           <div id="survey-voter-data" style="padding-top: 10px;">
             <div id="survey-voter-data-info">
               <div class="box contacts">
@@ -233,7 +240,6 @@
               </div>
             </div>
           </div>
-          -->
       </div>
 
       <div class="column is-full-tablet is-half-desktop">
