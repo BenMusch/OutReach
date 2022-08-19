@@ -42,8 +42,6 @@ class VoterController < ApplicationController
   end
 
   def update
-    puts "SAMPLE EMAIL PARAM"
-    puts voter_params[:email]
     if voter_params[:last_call_status]
       current_user.log_call!
       # TODO: un-comment this if we want to sync responses to the Reach API
@@ -83,10 +81,6 @@ class VoterController < ApplicationController
         "plan_to_vote_before" => params[:planned_to_vote_before].present? ? "1" : "0",
         "plan_to_vote_for_paul" => params[:planned_to_vote_for_paul].present? ? "1" : "0"
     }
-
-    puts "---------- SURVEY DATA FROM FORM ----------"
-    puts survey_data_from_form
-    puts "----------  ----------"
 
     voter = Voter.find(params[:id])
     voter.update!(survey_data: survey_data_from_form.to_json)
