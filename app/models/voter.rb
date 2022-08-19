@@ -12,9 +12,9 @@ class Voter < ApplicationRecord
   enum voter_registration_status: [:registered_in_district, :pending_registration_in_district, :registered_in_state, :registered_out_of_state, :unregistered]
 
   CALL_STATUS_TEXT = {
-    not_yet_called: "Not called",
-    should_call_again: "Should call again",
-    do_not_call: "Don't call back",
+    not_yet_called: "Not contacted",
+    should_call_again: "Should contact again",
+    do_not_call: "Don't contact again",
   }.freeze
 
   VOTER_REGISTRATION_STATUS_TEXT = {
