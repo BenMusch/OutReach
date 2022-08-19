@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 
 class VoterController < ApplicationController
   SKIP_WARN_THRESHOLDS = Set.new(Rails.configuration.rewards.skip_warnings)
@@ -41,6 +42,8 @@ class VoterController < ApplicationController
   end
 
   def update
+    puts "SAMPLE EMAIL PARAM"
+    puts voter_params[:email]
     if voter_params[:last_call_status]
       current_user.log_call!
       # TODO: un-comment this if we want to sync responses to the Reach API
@@ -48,8 +51,6 @@ class VoterController < ApplicationController
     end
 
     if voter.update(voter_params)
-      flash[:error] = "Error saving changes, try again"
-
       # if last_call_status is what changed, we want to redirect to the next
       # voter. Else we just want to reload the previous voter
       if voter_params[:last_call_status]
@@ -62,6 +63,31 @@ class VoterController < ApplicationController
       flash[:danger] = 'Error recording changes, try again!'
       redirect_to @voter
     end
+  end
+
+  def update_survey
+    survey_data_from_form = 
+    {
+        "issues" => {
+          "cares_climate" => params[:cares_about_climate].present? ? "1" : "0",
+          "cares_gun_control" => params[:cares_about_gun_control].present? ? "1" : "0",
+          "cares_healthcare" => params[:cares_about_healthcare].present? ? "1" : "0",
+          "cares_college_affordability" => params[:cares_about_college_affordability].present? ? "1" : "0",
+          "cares_reproductive_rights" => params[:cares_about_reproductive_rights].present? ? "1" : "0",
+          "cares_transparency" => params[:cares_about_transparency].present? ? "1" : "0",
+          "cares_marijuana" => params[:cares_about_marijuana].present? ? "1" : "0",
+          "cares_gender_equity" => params[:cares_about_gender_equity].present? ? "1" : "0",
+          "cares_pay_gap" => params[:cares_about_gender_pay_gap].present? ? "1" : "0",
+          "cares_sexual_assault" => params[:cares_about_sexual_assault].present? ? "1" : "0"
+        }
+    }
+
+    puts "---------- SURVEY DATA FROM FORM ----------"
+    puts survey_data_from_form
+    puts "----------  ----------"
+
+    voter = Voter.find(params[:id])
+    voter.update!(survey_data: survey_data_from_form.to_json)
   end
 
   private
