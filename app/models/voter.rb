@@ -38,7 +38,9 @@ class Voter < ApplicationRecord
       "cares_gender_equity" => "0",
       "cares_pay_gap" => "0",
       "cares_sexual_assault" => "0"
-    }
+    },
+    "plan_to_vote_before" => "0",
+    "plan_to_vote_for_paul" => "0"
   }.freeze
 
   def last_call_status_display

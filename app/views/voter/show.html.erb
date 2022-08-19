@@ -180,6 +180,14 @@
                   <%= check_box_tag :cares_about_sexual_assault, @voter.safe_survey_data["issues"]["cares_sexual_assault"], @voter.safe_survey_data["issues"]["cares_sexual_assault"] == "1" ? true : false %>
                   <%= label :cares_about_sexual_assault, "Sexual assault/violence", class: "tag is-info"%>
                   <br>
+                  <th><b>Check this box if the voter was planning on voting in November prior to you reaching out to them:</b></th>
+                  <td style='border:none;'>
+                  <%= check_box_tag :planned_to_vote_before, @voter.safe_survey_data["plan_to_vote_before"], @voter.safe_survey_data["plan_to_vote_before"] == "1" ? true : false %>
+                  <br>
+                  <th><b>If the voter was planning on voting this November, check this box if they were planning on voting for Paul:</b></th>
+                  <td style='border:none;'>
+                  <%= check_box_tag :planned_to_vote_for_paul, @voter.safe_survey_data["plan_to_vote_for_paul"], @voter.safe_survey_data["plan_to_vote_for_paul"] == "1" ? true : false %>
+                  <br>
                 <%= submit_tag "Submit survey data", class:"button is-active is-success is-medium is-light", style: "margin-top: 10px;" %>
               <% end %>
               </div>

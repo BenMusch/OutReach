@@ -79,7 +79,9 @@ class VoterController < ApplicationController
           "cares_gender_equity" => params[:cares_about_gender_equity].present? ? "1" : "0",
           "cares_pay_gap" => params[:cares_about_gender_pay_gap].present? ? "1" : "0",
           "cares_sexual_assault" => params[:cares_about_sexual_assault].present? ? "1" : "0"
-        }
+        },
+        "plan_to_vote_before" => params[:planned_to_vote_before].present? ? "1" : "0",
+        "plan_to_vote_for_paul" => params[:planned_to_vote_for_paul].present? ? "1" : "0"
     }
 
     puts "---------- SURVEY DATA FROM FORM ----------"
