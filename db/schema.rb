@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2022_08_19_225215) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "notes"
+    t.json "survey_data"
   end
 
 end
