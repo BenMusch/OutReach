@@ -96,7 +96,7 @@ class VoterController < ApplicationController
   private
 
   def voter_params
-    params.require(:voter).permit(:email, :last_call_status, :voter_registration_status, :notes, :party_id)
+    params.require(:voter).permit(:email, :last_call_status, :voter_registration_status, :notes, :party_id, :vote_plan, :vote_status)
   end
 
   def migrate_voters_seen
