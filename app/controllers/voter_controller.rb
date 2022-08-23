@@ -90,7 +90,7 @@ class VoterController < ApplicationController
       flash[:danger] = 'Error updating survey responses, try again'
     end
 
-    redirect_to @voter
+    redirect_to voter
   end
 
   private
