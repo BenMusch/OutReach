@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get 'show_dashboard', to: 'admin#show_dashboard', as: 'show_dashboard'
   get 'show_dashboard', to: 'admin#show_dashboard'
 
-  get 'imports', to: 'imports#index'
+  get 'imports', to: 'imports#index', as: 'imports'
   post 'imports', to: 'imports#create'
 end
