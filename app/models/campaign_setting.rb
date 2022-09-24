@@ -1,0 +1,2 @@
+class CampaignSetting < ApplicationRecord
+end

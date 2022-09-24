@@ -194,6 +194,7 @@ GEM
       ffi (~> 1.0)
     recipient_interceptor (0.3.1)
       mail
+    redcarpet (3.5.1)
     redis (4.8.0)
     regexp_parser (2.5.0)
     reline (0.3.1)
@@ -290,6 +291,7 @@ DEPENDENCIES
   rails (~> 6.0.0)
   rails_autoscale_agent (~> 0.9.1)
   recipient_interceptor
+  redcarpet (~> 3.5)
   redis (~> 4.2)
   rollbar (~> 3.1)
   sassc-rails

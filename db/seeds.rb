@@ -50,6 +50,7 @@ begin
     email_address: Faker::Internet.email,
     phone_number: "1234567890",
     rmm_email: Faker::Internet.email,
+    is_admin: true,
     role: rand(0..4)
   )
 rescue

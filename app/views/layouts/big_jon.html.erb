@@ -8,7 +8,7 @@
     <%= javascript_pack_tag 'application' %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ossoff 2020 - GOTV</title>
+    <title><%= camapign_name %> - GOTV</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
@@ -20,13 +20,13 @@
 
 
   <body class="gotv-page login-page">
-    <div id="ossoff-photo"></div>
+    <img id="main-photo" src="<%= home_image_url %>" alt="Image of the candidate"/>
 
     <section class="hero is-link">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand py-4 px-5">
           <a class="navbar-item" href="/">
-            <img id="logo" src="<%= asset_path "logo.png" %>" alt="Ossoff Logo">
+            <img id="logo" src="<%= asset_path "logo.png" %>" alt="<%= camapign_name %> Logo">
           </a>
         </div>
       </nav>

@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get '/voter/:id/next',        to: 'voter#next' # with an id = get voter after current voter
   resources :voter, only: [:show, :update]
 
+  resource :campaign_settings, only: [:edit, :update]
+
+
   get 'verify', to: 'users#verify', as: 'verify'
   post 'verify', to: 'users#verify'
 

@@ -1,0 +1,44 @@
+<section class="hero is-link">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <p class="title is-size-1-desktop is-size-2-table is-size-3-mobile is-uppercase has-text-weight-normal mb-0">
+          Campaign Settings
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <%= form_for @campaign_setting, url: campaign_settings_path do |f| %>
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.label :home_image_url %>
+            <%= f.text_field :home_image_url %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.label :script_content_markdown %>
+            <%= f.text_area :script_content_markdown %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.submit %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

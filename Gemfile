@@ -61,3 +61,5 @@ gem "rails_autoscale_agent", "~> 0.9.1"
 gem "rollbar", "~> 3.1"
 
 gem "redis", "~> 4.2"
+
+gem "redcarpet", "~> 3.5"

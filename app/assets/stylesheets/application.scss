@@ -70,17 +70,13 @@ nav {
   max-height: 100%;
 }
 
-#ossoff-photo {
-  /* TODO: resize and optimize photo */
-  background-image: image-url('ossoff_photo.png');
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 55%;
+#main-photo {
   height: 100%;
-  background-position: right bottom;
-  background-repeat: no-repeat;
-  background-size: contain;
+  width: 50%;
+  position: absolute;
+  right: 0;
+  object-fit: contain;
+  object-position: right bottom;
 }
 
 #countdown {
@@ -271,4 +267,26 @@ canvas#confetti-canvas {
   form input#phone_number {
     width: 170px;
   }
+}
+
+// Adding custom styles here that we would usually want to inline because the
+// markdown input can't specify its styles
+#conversation-guide-content {
+    h1 {
+        color: #363636;
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 1.125;
+        margin-bottom: 0.25rem;
+    }
+
+    h2 {
+        font-family: 'Roboto Condense', sans-serif;
+        margin-bottom: 0.25rem;
+        margin-top: 0.25rem;
+    }
+
+    p {
+        margin-left: 1rem;
+    }
 }
