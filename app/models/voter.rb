@@ -16,21 +16,12 @@ class Voter < ApplicationRecord
     do_not_call: "Don't call back",
   }.freeze
 
-  VOTE_STATUS_TEXT = {
-    "ballot mailed" => "Needs to Return Ballot",
-    "ballot received" => "Has Voted!",
-  }.freeze
-
   def last_call_status_display
     CALL_STATUS_TEXT.fetch(last_call_status.to_sym, "Unknown")
   end
 
   def polling_place_display
     nil # TODO: implement voting location search if possible
-  end
-
-  def voting_status_display
-    VOTE_STATUS_TEXT.fetch(voting_status.downcase, voting_status) || "Unknown"
   end
 
   def phone_number_display

@@ -85,7 +85,6 @@
                         <%= link_to v.display_name, voter_path(v) %>
                       </td>
                       <td class="nowrap"><%= v.phone_number_display %></td>
-                      <td><%= v.voting_status ? v.voting_status_display : "Unavailable" %></td>
                       <td><%= v.vote_plan || "Unavailable" %></td>
                       <td><%= v.last_call_status_display %></td>
                     </tr>
