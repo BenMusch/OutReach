@@ -9,7 +9,6 @@ my_logger.level = Logger::ERROR
 # Google::Apis.logger = my_logger
 
 class BigQueryLoader
-=begin
   BIGQUERY_CLIENT = Google::Cloud::Bigquery.new
   RELATIONS_QUERY = Rails.configuration.bigquery.relations_query
   USERS_QUERY     = Rails.configuration.bigquery.users_query
@@ -68,26 +67,11 @@ class BigQueryLoader
         last_name: row[:last_name],
         first_name: row[:first_name],
         middle_name: row[:middle_name],
-        age: row[:age],
-        gender: row[:gender],
         primary_phone_number: row[:primary_phone_number],
         voting_street_address: row[:voting_street_address],
         voting_city: row[:voting_city],
         voting_zip: row[:voting_zip],
-        support_score: row[:support_id],
-        vote_plan: row[:vote_plan],
-        voting_status: row[:voting_status],
-        voted_general: row[:voted_general],
-        household_id: row[:household_id],
         sos_id: row[:sos_id],
-        tier: row[:tier],
-        tier_raw: row[:tier_raw],
-        voted: row[:voted],
-        vote_location_name: row[:vote_location_name],
-        vote_location_address: row[:vote_location_address],
-        vote_location_city: row[:vote_location_city],
-        vote_location_hours: row[:vote_location_hours],
-        vote_location_zip: row[:vote_location_zip],
       }
     end
     puts("Finished voter import")
@@ -134,5 +118,4 @@ class BigQueryLoader
 
     !failed
   end
-=end
 end
