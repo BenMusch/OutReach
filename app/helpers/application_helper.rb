@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def campaign_settings
-    @campaign_settings ||= CampaignSetting.first
+    @campaign_settings ||= CampaignSetting.current
   end
 
   def markdown(text)

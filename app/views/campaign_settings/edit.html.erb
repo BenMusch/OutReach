@@ -36,6 +36,34 @@
 
       <div class="columns is-centered has-text-centered">
         <div class="column">
+            <%= f.label :users_query %>
+            <%= f.text_area :users_query %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.label :voters_query %>
+            <%= f.text_area :voters_query %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.label :relationships_query %>
+            <%= f.text_area :voters_query %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+            <%= f.label :bigquery_credentials_json %>
+            <%= f.text_area :bigquery_credentials_json, value: "", placeholder: "This value is never displayed, only saved" %>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
             <%= f.submit %>
         </div>
       </div>

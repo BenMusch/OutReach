@@ -1,26 +1,25 @@
 # frozen_string_literal: true
-# require "google/cloud/bigquery"
-# require "logger"
+require "google/cloud/bigquery"
+require "logger"
 
 my_logger = Logger.new $stderr
 my_logger.level = Logger::ERROR
 
 # Set the Google API Client logger
-# Google::Apis.logger = my_logger
+Google::Apis.logger = my_logger
 
 class BigQueryLoader
-  BIGQUERY_CLIENT = Google::Cloud::Bigquery.new
-  RELATIONS_QUERY = Rails.configuration.bigquery.relations_query
-  USERS_QUERY     = Rails.configuration.bigquery.users_query
-  VOTERS_QUERY    = Rails.configuration.bigquery.voters_query
-
   def initialize(batch_size: nil, sleep_seconds: nil)
     @batch_size = batch_size || ENV.fetch('LOADER_BATCH_SIZE', 1000).to_i
     @sleep_seconds = sleep_seconds || ENV.fetch('LOADER_SLEEP_SECONDS', 1).to_i
   end
 
   def load_relationships
-    batch_upsert_from_bigquery(RELATIONS_QUERY,
+    unless CampaignSetting.current.relationships_query.present?
+      raise "No relationships query!"
+    end
+
+    batch_upsert_from_bigquery(CampaignSetting.current.relationships_query,
                                model_cls: Relationship,
                                unique_by: [:user_id, :voter_sos_id]) do |row|
       {
@@ -33,7 +32,11 @@ class BigQueryLoader
   end
 
   def load_users
-    batch_upsert_from_bigquery(USERS_QUERY,
+    unless CampaignSetting.current.users_query.present?
+      raise "No users query!"
+    end
+
+    batch_upsert_from_bigquery(CampaignSetting.current.users_query,
                                model_cls: User,
                                key: :user_id) do |row|
       {
@@ -48,16 +51,25 @@ class BigQueryLoader
   end
 
   def load_voters
-    load_voters_shared(VOTERS_QUERY)
-  end
-
-  def load_all_voters
-    load_voters_shared(ALL_VOTERS_QUERY)
+    load_voters_shared(CampaignSetting.current.voters_query)
   end
 
   private
 
   attr_reader :batch_size, :sleep_seconds
+
+  def client
+    # Can't memo-ize the client because credentials could update at any time
+    credentials = CampaignSetting.current.bigquery_credentials_json
+    credentials_parsed = JSON.parse(credentials)
+
+    Google::Cloud::Bigquery.configure do |config|
+      config.project_id  = credentials["project_id"]
+      config.credentials = credentials
+    end
+
+    Google::Cloud::Bigquery.new
+  end
 
   def load_voters_shared(q)
     batch_upsert_from_bigquery(q,
@@ -82,7 +94,7 @@ class BigQueryLoader
 
     failed = false
     cur_batch = {}
-    data = BIGQUERY_CLIENT.query(query, max: batch_size)
+    data = client.query(query, max: batch_size)
 
     loop do
       data.each do |row|
