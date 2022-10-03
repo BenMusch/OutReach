@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_02_233123) do
+ActiveRecord::Schema.define(version: 2022_10_03_013023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 2022_10_02_233123) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
-  create_table "voters", primary_key: "reach_id", id: :string, force: :cascade do |t|
-    t.string "sos_id"
+  create_table "voters", primary_key: "sos_id", id: :string, force: :cascade do |t|
+    t.string "reach_id"
     t.string "last_name"
     t.string "first_name"
     t.string "middle_name"

@@ -8,6 +8,11 @@ my_logger.level = Logger::ERROR
 # Set the Google API Client logger
 Google::Apis.logger = my_logger
 
+if Rails.env.development?
+  # TODO: this is a hack due to my local openssl not liking ruby
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+end
+
 class BigQueryLoader
   def initialize(batch_size: nil, sleep_seconds: nil)
     @batch_size = batch_size || ENV.fetch('LOADER_BATCH_SIZE', 1000).to_i
@@ -64,8 +69,8 @@ class BigQueryLoader
     credentials_parsed = JSON.parse(credentials)
 
     Google::Cloud::Bigquery.configure do |config|
-      config.project_id  = credentials["project_id"]
-      config.credentials = credentials
+      config.project_id  = credentials_parsed["project_id"]
+      config.credentials = credentials_parsed
     end
 
     Google::Cloud::Bigquery.new
