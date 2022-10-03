@@ -60,7 +60,7 @@ class BigQueryLoader
 
   def client
     # Can't memo-ize the client because credentials could update at any time
-    credentials = CampaignSetting.current.bigquery_credentials_json
+    credentials = CampaignSetting.current.credentials_json
     credentials_parsed = JSON.parse(credentials)
 
     Google::Cloud::Bigquery.configure do |config|

@@ -11,4 +11,20 @@ class CampaignSetting < ApplicationRecord
     instantiate_if_not_exists!
     CampaignSetting.first
   end
+
+  def credentials_json
+    raw_value = super
+    raw_value.present? ? crypt.decrypt_and_verify(raw_value) : raw_value
+  end
+
+  def credentials_json=(raw_value)
+    encrypted_value = crypt.encrypt_and_sign(raw_value)
+    super(encrypted_value)
+  end
+
+  private
+
+  def crypt
+    ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base)
+  end
 end

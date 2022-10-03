@@ -5,10 +5,10 @@ class CampaignSettingsController < ApplicationController
   end
 
   def update
-    if campaign_settings_params.key?(:bigquery_credentials_json) && !campaign_settings_params[:bigquery_credentials_json].present?
+    if campaign_settings_params.key?(:credentials_json) && !campaign_settings_params[:credentials_json].present?
       # Ensure that empty value default from the UI doesn't over-write the
       # actual credentials
-      campaign_settings_params.delete(:bigquery_credentials_json)
+      campaign_settings_params.delete(:credentials_json)
     end
 
     if @campaign_setting.update_attributes(campaign_settings_params)
@@ -24,7 +24,7 @@ class CampaignSettingsController < ApplicationController
     params.require(:campaign_setting).permit(
       :name, :home_image_url, :script_content_markdown,
       :voters_query, :users_query, :relationships_query,
-      :bigquery_credentials_json)
+      :credentials_json)
   end
 
   def require_admin
