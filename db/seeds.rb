@@ -132,7 +132,7 @@ User.all.each do |user|
   begin
     Relationship.create!(
       user_id: user.id,
-      voter_reach_id: voter.reach_id,
+      voter_sos_id: voter.sos_id,
       relationship: "Me",
     )
   rescue
@@ -143,7 +143,7 @@ User.all.each do |user|
     begin
       Relationship.create!(
         user_id: user.id,
-        voter_reach_id: Voter.all.sample.reach_id,
+        voter_sos_id: Voter.all.sample.sos_id,
         relationship: "Friend",
       )
     rescue ActiveRecord::RecordNotUnique

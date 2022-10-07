@@ -18,8 +18,12 @@ class CampaignSetting < ApplicationRecord
   end
 
   def credentials_json=(raw_value)
-    encrypted_value = crypt.encrypt_and_sign(raw_value)
-    super(encrypted_value)
+    if raw_value.present?
+      encrypted_value = crypt.encrypt_and_sign(raw_value)
+      super(encrypted_value)
+    else
+      Rails.logger.info("Skipping update of credentials_json to non-present value")
+    end
   end
 
   private

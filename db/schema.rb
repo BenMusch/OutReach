@@ -28,12 +28,12 @@ ActiveRecord::Schema.define(version: 2022_10_03_013023) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.string "voter_reach_id"
+    t.string "voter_sos_id"
     t.string "user_id"
     t.string "relationship"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id", "voter_reach_id"], name: "index_relationships_on_user_id_and_voter_reach_id", unique: true
+    t.index ["user_id", "voter_sos_id"], name: "index_relationships_on_user_id_and_voter_sos_id", unique: true
   end
 
   create_table "users", id: :string, force: :cascade do |t|

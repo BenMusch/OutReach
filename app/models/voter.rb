@@ -3,7 +3,7 @@
 class Voter < ApplicationRecord
   self.primary_key = :sos_id
 
-  has_many :relationships, foreign_key: :voter_reach_id
+  has_many :relationships, foreign_key: :voter_sos_id
   has_many :users, through: :relationships
 
   enum last_call_status: [ :not_yet_called, :should_call_again, :do_not_call ]

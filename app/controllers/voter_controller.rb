@@ -70,7 +70,7 @@ class VoterController < ApplicationController
   end
 
   def authorize_and_set_contact
-    return unless voter.relationships.where(user: current_user).empty?
+    return unless voter.relationships.where(user_id: current_user.id).empty?
     flash[:danger] = "You don't have access to that voter's details"
     redirect_back(fallback_location: root_path)
   end

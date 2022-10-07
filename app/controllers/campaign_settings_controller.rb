@@ -5,12 +5,6 @@ class CampaignSettingsController < ApplicationController
   end
 
   def update
-    if campaign_settings_params.key?(:credentials_json) && !campaign_settings_params[:credentials_json].present?
-      # Ensure that empty value default from the UI doesn't over-write the
-      # actual credentials
-      campaign_settings_params.delete(:credentials_json)
-    end
-
     if @campaign_setting.update_attributes(campaign_settings_params)
       redirect_to edit_campaign_settings_path, success: 'Settings updated!'
     else

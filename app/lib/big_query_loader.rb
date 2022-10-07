@@ -26,11 +26,11 @@ class BigQueryLoader
 
     batch_upsert_from_bigquery(CampaignSetting.current.relationships_query,
                                model_cls: Relationship,
-                               unique_by: [:user_id, :voter_sos_id]) do |row|
+                               unique_by: :index_relationships_on_user_id_and_voter_sos_id) do |row|
       {
         user_id:      row[:user_id],
-        voter_sos_id: row[:sos_id],
-        relationship: row[:relationship_type],
+        voter_sos_id: row[:voter_sos_id],
+        relationship: row[:relationship],
       }
     end
     puts("Finished relationship import!")
@@ -88,6 +88,7 @@ class BigQueryLoader
         voting_street_address: row[:voting_street_address],
         voting_city: row[:voting_city],
         voting_zip: row[:voting_zip],
+        reach_id: row[:reach_id],
         sos_id: row[:sos_id],
       }
     end
@@ -113,6 +114,7 @@ class BigQueryLoader
       end
 
       puts("Got batch of #{cur_batch.size}, up-serting!")
+
       begin
         model_cls.upsert_all(cur_batch.values, unique_by: unique_by)
       rescue StandardError => e
