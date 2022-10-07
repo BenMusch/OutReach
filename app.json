@@ -15,6 +15,7 @@
       "url": "heroku/ruby"
     }
   ],
+  "stack": "heroku-20",
   "description": "Virtual phone-bank on-top of your reach data",
   "scripts": {
     "postdeploy": "bundle exec rails db:migrate"
