@@ -14,7 +14,7 @@ class VoterController < ApplicationController
   def next
     call_list = current_user.call_list
     voters_seen = current_user.seen_voters
-    next_voter = call_list.find { |v| !voters_seen[v.reach_id] }
+    next_voter = call_list.find { |v| !voters_seen[v.sos_id] }
 
     if params[:skip] && voter
       record_in_reach(Rails.configuration.reach.responses[:skip])
@@ -76,6 +76,8 @@ class VoterController < ApplicationController
   end
 
   def record_in_reach(choice_id)
+    return
+    # TODO: More generalized way to talk to reach
     REACH_CLIENT.record_response("#{Rails.configuration.reach.id_prefix}_#{voter.sos_id.to_s.rjust(8, "0")}",
                                  current_user.id,
                                  Rails.configuration.reach.question_id,
