@@ -72,8 +72,8 @@ class User < ApplicationRecord
 
   def relationship_call_list
     Voter.
-      where(reach_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_sos_id)).
-      order(:reach_id).
+      where(sos_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_sos_id)).
+      order(:sos_id).
       where(last_call_status: [:not_yet_called, :should_call_again])
   end
 end
