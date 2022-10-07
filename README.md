@@ -14,6 +14,8 @@ For now, this repo is just provided for reference and to fork for
 future campaigns. In the future, it can be abstracted to support any campaign
 using Reach.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/benmusch/outreach/tree/next)
+
 **Some basic documentation will be provided in the future, though the amount of
 effort spent on this will depend on interest from other campaigns. If you're
 interested in using this, please email me at benmuschol@gmail.com**
@@ -27,15 +29,16 @@ phone/textbanking events, so you may have better luck simply using reach on its
 own rather than trying to deploy outreach.
 
 That said, to set it up for another campaign, the work should focus around:
- - Graphics: The homepage features a photo of Jon Ossoff which should be rotated
-   in favor of a photo of your candidate
- - Data pipeline: The data pipeline is currently tightly-coupled to the Ossoff
-   campaign's data. Though most of the data is essentially directly from the
-   Reach API, it was imported via BigQuery, so there is no implementation to
-   load data from Reach directly. Additionally, some data around voter scores or
-   polling places was loaded from non-Reach data pipelines. The codebase should
-   be modified to work with null values in that instance or import them through
-   some other source.
+
+- Graphics: The homepage features a photo of Jon Ossoff which should be rotated
+  in favor of a photo of your candidate
+- Data pipeline: The data pipeline is currently tightly-coupled to the Ossoff
+  campaign's data. Though most of the data is essentially directly from the
+  Reach API, it was imported via BigQuery, so there is no implementation to
+  load data from Reach directly. Additionally, some data around voter scores or
+  polling places was loaded from non-Reach data pipelines. The codebase should
+  be modified to work with null values in that instance or import them through
+  some other source.
 
 The app comes with fake data to use and play around with for development
 purposes so you can set it up without this data pipeline for testing, but it
