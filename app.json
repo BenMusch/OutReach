@@ -15,15 +15,51 @@
       "url": "heroku/ruby"
     }
   ],
+  "description": "Virtual phone-bank on-top of your reach data",
   "scripts": {
-    "postdeploy": "bundle exec rails db:migrate db:seed"
+    "postdeploy": "bundle exec rails db:migrate TODO add set-up here"
   },
   "env": {
     "HEROKU_APP_NAME": {
-        "required": true
+        "required": true,
+        "description": "Name for the servers"
     },
     "RAILS_ENV": {
-      "value": "staging"
+      "value": "production"
+    },
+    "CAMPAIGN_NAME": {
+        "required": true,
+        "description": "Name of the campaign (e.g. 'Biden 2020')"
+    },
+    "CAMPAIGN_ADMIN_PHONE_NUMBER": {
+        "required": true,
+        "description": "Phone number of the initial admin user"
+    },
+    "TWILIO_ACCOUNT_SID": {
+        "required": true
+    },
+    "TWILIO_ACCOUNT_AUTH_TOKEN": {
+        "required": true
+    },
+    "SECRET_KEY_BASE": {
+        "required": true,
+        "description": "Used for encryption. MUST be 256 bits. Ctrl+f '256' on https://randomkeygen.com/"
+    },
+    "APPLICATION_HOST": {
+        "required": true
+    },
+    "FORCE_SSL": {
+        "value": "1"
+    },
+    "SKYLIGHT_TOKEN": {
+        "description": "Token for skylight.io monitoring"
+    },
+    "ROLLBAR_ACCESS_TOKEN": {
+        "description": "Token for rollbar.com monitoring"
+    },
+    "BIGQUERY_CREDENTIALS_JSON": {
+        "description": "JSON of bigquery creds",
+        "required": true
     }
   }
 }
