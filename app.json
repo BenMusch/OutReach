@@ -17,7 +17,7 @@
   ],
   "description": "Virtual phone-bank on-top of your reach data",
   "scripts": {
-    "postdeploy": "bundle exec rails db:migrate TODO add set-up here"
+    "postdeploy": "bundle exec rails db:migrate"
   },
   "env": {
     "HEROKU_APP_NAME": {
