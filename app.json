@@ -39,7 +39,7 @@
     "TWILIO_ACCOUNT_SID": {
         "required": true
     },
-    "TWILIO_ACCOUNT_AUTH_TOKEN": {
+    "TWILIO_AUTH_TOKEN": {
         "required": true
     },
     "TWILIO_VERIFICATION_SID": {
