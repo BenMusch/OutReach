@@ -15,7 +15,10 @@ class CampaignSettingsController < ApplicationController
   private
 
   def campaign_settings_params
-    params.require(:campaign_setting).permit(:name, :home_image_url, :script_content_markdown)
+    params.require(:campaign_setting).permit(
+      :name, :home_image_url, :script_content_markdown,
+      :voters_query, :users_query, :relationships_query,
+      :credentials_json)
   end
 
   def require_admin
@@ -26,12 +29,7 @@ class CampaignSettingsController < ApplicationController
   end
 
   def ensure_one_settings_entry
-    CampaignSetting.transaction do
-      if CampaignSetting.count == 0
-        CampaignSetting.create!
-      end
-
-      @campaign_setting = CampaignSetting.first
-    end
+    CampaignSetting.instantiate_if_not_exists!
+    @campaign_setting = CampaignSetting.current
   end
 end

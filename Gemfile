@@ -63,3 +63,5 @@ gem "rollbar", "~> 3.1"
 gem "redis", "~> 4.2"
 
 gem "redcarpet", "~> 3.5"
+
+gem "google-cloud-bigquery", "~> 1.25"

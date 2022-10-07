@@ -45,7 +45,7 @@ class UpdateVotersFields < ActiveRecord::Migration[6.0]
     end
 
     create_table :relationships do |t|
-      t.string :voter_reach_id
+      t.string :voter_sos_id
       t.string :user_id
       t.string :relationship
 

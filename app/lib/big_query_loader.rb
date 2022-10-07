@@ -1,40 +1,47 @@
 # frozen_string_literal: true
-# require "google/cloud/bigquery"
-# require "logger"
+require "google/cloud/bigquery"
+require "logger"
 
 my_logger = Logger.new $stderr
 my_logger.level = Logger::ERROR
 
 # Set the Google API Client logger
-# Google::Apis.logger = my_logger
+Google::Apis.logger = my_logger
+
+if Rails.env.development?
+  # TODO: this is a hack due to my local openssl not liking ruby
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+end
 
 class BigQueryLoader
-=begin
-  BIGQUERY_CLIENT = Google::Cloud::Bigquery.new
-  RELATIONS_QUERY = Rails.configuration.bigquery.relations_query
-  USERS_QUERY     = Rails.configuration.bigquery.users_query
-  VOTERS_QUERY    = Rails.configuration.bigquery.voters_query
-
   def initialize(batch_size: nil, sleep_seconds: nil)
     @batch_size = batch_size || ENV.fetch('LOADER_BATCH_SIZE', 1000).to_i
     @sleep_seconds = sleep_seconds || ENV.fetch('LOADER_SLEEP_SECONDS', 1).to_i
   end
 
   def load_relationships
-    batch_upsert_from_bigquery(RELATIONS_QUERY,
+    unless CampaignSetting.current.relationships_query.present?
+      raise "No relationships query!"
+    end
+
+    batch_upsert_from_bigquery(CampaignSetting.current.relationships_query,
                                model_cls: Relationship,
-                               unique_by: [:user_id, :voter_sos_id]) do |row|
+                               unique_by: :index_relationships_on_user_id_and_voter_sos_id) do |row|
       {
         user_id:      row[:user_id],
-        voter_sos_id: row[:sos_id],
-        relationship: row[:relationship_type],
+        voter_sos_id: row[:voter_sos_id],
+        relationship: row[:relationship],
       }
     end
     puts("Finished relationship import!")
   end
 
   def load_users
-    batch_upsert_from_bigquery(USERS_QUERY,
+    unless CampaignSetting.current.users_query.present?
+      raise "No users query!"
+    end
+
+    batch_upsert_from_bigquery(CampaignSetting.current.users_query,
                                model_cls: User,
                                key: :user_id) do |row|
       {
@@ -49,16 +56,25 @@ class BigQueryLoader
   end
 
   def load_voters
-    load_voters_shared(VOTERS_QUERY)
-  end
-
-  def load_all_voters
-    load_voters_shared(ALL_VOTERS_QUERY)
+    load_voters_shared(CampaignSetting.current.voters_query)
   end
 
   private
 
   attr_reader :batch_size, :sleep_seconds
+
+  def client
+    # Can't memo-ize the client because credentials could update at any time
+    credentials = CampaignSetting.current.credentials_json
+    credentials_parsed = JSON.parse(credentials)
+
+    Google::Cloud::Bigquery.configure do |config|
+      config.project_id  = credentials_parsed["project_id"]
+      config.credentials = credentials_parsed
+    end
+
+    Google::Cloud::Bigquery.new
+  end
 
   def load_voters_shared(q)
     batch_upsert_from_bigquery(q,
@@ -68,26 +84,12 @@ class BigQueryLoader
         last_name: row[:last_name],
         first_name: row[:first_name],
         middle_name: row[:middle_name],
-        age: row[:age],
-        gender: row[:gender],
         primary_phone_number: row[:primary_phone_number],
         voting_street_address: row[:voting_street_address],
         voting_city: row[:voting_city],
         voting_zip: row[:voting_zip],
-        support_score: row[:support_id],
-        vote_plan: row[:vote_plan],
-        voting_status: row[:voting_status],
-        voted_general: row[:voted_general],
-        household_id: row[:household_id],
+        reach_id: row[:reach_id],
         sos_id: row[:sos_id],
-        tier: row[:tier],
-        tier_raw: row[:tier_raw],
-        voted: row[:voted],
-        vote_location_name: row[:vote_location_name],
-        vote_location_address: row[:vote_location_address],
-        vote_location_city: row[:vote_location_city],
-        vote_location_hours: row[:vote_location_hours],
-        vote_location_zip: row[:vote_location_zip],
       }
     end
     puts("Finished voter import")
@@ -98,7 +100,7 @@ class BigQueryLoader
 
     failed = false
     cur_batch = {}
-    data = BIGQUERY_CLIENT.query(query, max: batch_size)
+    data = client.query(query, max: batch_size)
 
     loop do
       data.each do |row|
@@ -112,6 +114,7 @@ class BigQueryLoader
       end
 
       puts("Got batch of #{cur_batch.size}, up-serting!")
+
       begin
         model_cls.upsert_all(cur_batch.values, unique_by: unique_by)
       rescue StandardError => e
@@ -134,5 +137,4 @@ class BigQueryLoader
 
     !failed
   end
-=end
 end

@@ -1,6 +1,6 @@
 class AddIndexesForAllQueries < ActiveRecord::Migration[6.0]
   def change
-    add_index :relationships, [:relationship, :user_id]
+    add_index :relationships, [:relationship, :user_id], unique: true
     add_index :relationships, :user_id
     add_index :relationships, :voter_sos_id
 
