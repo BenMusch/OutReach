@@ -28,6 +28,7 @@ module Gotv
     config.load_defaults 6.0
     config.generators.system_tests = nil
     config.skylight.environments << "staging"
+    config.skylight.environments << "production"
     config.reach    = config_for(:reach)
     config.rewards  = config_for(:rewards)
     config.bigquery = config_for(:bigquery)
