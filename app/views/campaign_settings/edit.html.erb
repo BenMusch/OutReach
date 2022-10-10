@@ -12,59 +12,85 @@
 
 <section class="section">
   <div class="container">
+
     <%= form_for @campaign_setting, url: campaign_settings_path do |f| %>
-      <div class="columns is-centered has-text-centered">
+      <div class="columns is-centered">
         <div class="column">
-            <%= f.label :name %>
-            <%= f.text_field :name %>
-        </div>
-      </div>
+          <h3 class="title is-3">General Settings</h3>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.label :home_image_url %>
-            <%= f.text_field :home_image_url %>
-        </div>
-      </div>
+          <div class="field">
+            <%= f.label :name , class: "label" %>
+            <div class="control">
+              <%= f.text_field :name, class: "input" %>
+            </div>
+            <p class="help">This name is used on the page titles. Ex: Biden 2020</p>
+          </div>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.label :script_content_markdown %>
-            <%= f.text_area :script_content_markdown %>
-        </div>
-      </div>
+          <div class="field">
+            <%= f.label :election_time, "Polls closing date & time", class: "label" %>
+            <div class="control">
+              <%= f.datetime_field :election_time, class: "input" %>
+            </div>
+            <p class="help">This will be used for the countdown on the home page</p>
+          </div>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.label :users_query %>
-            <%= f.text_area :users_query %>
-        </div>
-      </div>
+          <div class="field">
+            <%= f.label :home_image_url, class: "label" %>
+            <div class="control">
+              <%= f.text_field :home_image_url, class: "input" %>
+            </div>
+            <p class="help">High-res image of the candidate for the home page. (Optional)</p>
+          </div>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.label :voters_query %>
-            <%= f.text_area :voters_query %>
-        </div>
-      </div>
+          <div class="field">
+            <%= f.label :script_content_markdown, class: "label" %>
+            <div class="control">
+              <%= f.text_area :script_content_markdown, class: "textarea" %>
+            </div>
+            <p class="help">
+            <a href="https://www.ultraedit.com/company/blog/community/what-is-markdown-why-use-it.html" target="_blank">Markdown</a>-formatted script with with info for the relational organizers.
+            It's recommended to use a markdown editor like
+            <a href="https://stackedit.io/app#" target="_blank">StackEdit</a>
+            to edit the script and then paste into here.
+            </p>
+          </div>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.label :relationships_query %>
-            <%= f.text_area :relationships_query %>
-        </div>
-      </div>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.label :credentials_json %>
-            <%= f.text_area :credentials_json, value: "", placeholder: "This value is never displayed, only saved" %>
-        </div>
-      </div>
+          <h3 class="title is-3">Developer Settings</h3>
+          <h5 class="subtitle is-5">Don't touch these unless you know what you're doing</h5>
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-            <%= f.submit %>
+          <div class="field">
+            <%= f.label :users_query, class: "label" %>
+            <div class="control">
+              <%= f.text_area :users_query, class: "textarea" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= f.label :voters_query, class: "label" %>
+            <div class="control">
+              <%= f.text_area :voters_query, class: "textarea" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= f.label :relationships_query, class: "label" %>
+            <div class="control">
+              <%= f.text_area :relationships_query, class: "textarea" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= f.label :credentials_json, "BigQuery Service Account JSON", class: "label" %>
+            <div class="control">
+              <%= f.text_area :credentials_json, value: "", placeholder: "This value is write-only. We do not show it in the app.", class: "textarea" %>
+            </div>
+            <p class="help">This value will be encrypted before it's saved.</p>
+          </div>
+
+          <div class="column">
+              <%= f.submit "Save", class: "button is-link" %>
+          </div>
         </div>
       </div>
     <% end %>

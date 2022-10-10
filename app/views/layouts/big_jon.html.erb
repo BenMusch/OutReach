@@ -33,27 +33,44 @@
 
       <div class="hero-body countdown">
         <div class="container">
-          <div class="columns is-centered is-mobile">
-            <div class="column is-half-tablet is-narrow-mobile">
-              <p id="countdown_intro" class="title has-text-weight-normal mb-0">
-                POLLS CLOSE 7PM TUESDAY!
-              </p>
-            </div>
-          </div>
-          <div class="columns is-centered is-mobile">
-            <div class="column is-half-tablet is-narrow-mobile">
-              <div id="countdown">
-                00:00:00
+          <% if polls_close_time %>
+            <div class="columns is-centered is-mobile">
+              <div class="column is-half-tablet is-narrow-mobile">
+                <p id="countdown_intro" class="title has-text-weight-normal mb-0">
+                POLLS CLOSE <%= polls_close_time.strftime("%l%p %A").upcase %>!
+                </p>
               </div>
             </div>
-          </div>
-          <div class="columns is-centered is-mobile">
-            <div class="column is-half-tablet is-narrow-mobile">
-              <p id="countdown_tagline" class="subtitle has-text-weight-normal">
-                There's still time to make a difference
-              </p>
+            <div class="columns is-centered is-mobile">
+              <div class="column is-half-tablet is-narrow-mobile">
+                <div id="countdown">
+                  00:00:00
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="columns is-centered is-mobile">
+              <div class="column is-half-tablet is-narrow-mobile">
+                <p id="countdown_tagline" class="subtitle has-text-weight-normal">
+                  There's still time to make a difference
+                </p>
+              </div>
+            </div>
+          <% else %>
+            <div class="columns is-centered is-mobile">
+              <div class="column is-half-tablet is-narrow-mobile">
+                <p id="countdown_intro" class="title has-text-weight-normal mb-0">
+                  POLLS CLOSE SOON!
+                </p>
+              </div>
+            </div>
+            <div class="columns is-centered is-mobile">
+              <div class="column is-half-tablet is-narrow-mobile">
+                <p id="countdown_tagline" class="subtitle has-text-weight-normal">
+                  There's still time to make a difference
+                </p>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </section>
@@ -78,15 +95,56 @@
     </section>
 
 <script>
-function startTimer(duration) {
+<% if polls_close_time %>
+
+function zeroPadIfNeeded(val) {
+    if (val < 10) {
+        return "0" + val.toString();
+    }
+    return val.toString();
+}
+
+function getDisplayTime(seconds_remaining) {
+    if (seconds_remaining <= 0) {
+        return "00:00:00"
+    }
+
+    let hours_remaining = Math.floor(seconds_remaining / (60 * 60));
+    let minutes_remaining = Math.floor(seconds_remaining / 60);
+
+    let hours_to_display = hours_remaining;
+    let minutes_to_display = minutes_remaining % 60;
+    let seconds_to_display = Math.floor(seconds_remaining) % 60;
+
+    return zeroPadIfNeeded(hours_to_display) +
+      ":" +
+      zeroPadIfNeeded(minutes_to_display) +
+      ":" +
+      zeroPadIfNeeded(seconds_to_display);
+}
+
+function startTimer(polls_close_time) {
+    let interval = window.setInterval(() => {
+        let now = Date.now();
+        let seconds_left = (polls_close_time - now)/1000;
+
+        if (seconds_left <= 0) {
+            clearInterval(interval);
+        }
+
+        let time_to_display = getDisplayTime(seconds_left);
+        document.getElementById('countdown').innerHTML = time_to_display;
+    }, 1000);
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  let now = Date.now();
-  let polls_close_time = new Date("2021-01-06T00:00:00.000+00:00").getTime();
-  let seconds_left = (polls_close_time - now)/1000;
-  startTimer(seconds_left);
+  // Removing the "Z" is a hack to make things tz-unaware. Should figure out a
+  // a better way to do this but in rails it's not trivial
+  let polls_close_time = new Date("<%= polls_close_time.iso8601.gsub('Z', '') %>").getTime();
+  startTimer(polls_close_time);
 });
+
+<% end %>
 </script>
-  </body>
+</body>
 </html>

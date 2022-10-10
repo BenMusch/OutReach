@@ -30,6 +30,14 @@
           <img id="logo" src="<%= asset_path "logo.png" %>" alt="Ossoff Logo">
         </a>
       </div>
+
+      <% if is_admin? %>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <%= link_to "Admin Settings", edit_campaign_settings_path, class: "navbar-item" %>
+          </div>
+        </div>
+      <% end %>
     </nav>
 
     <% if flash[:warning] || flash[:success] || flash[:danger] %>

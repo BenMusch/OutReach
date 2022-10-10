@@ -7,12 +7,20 @@ module ApplicationHelper
     @home_image_url ||= campaign_settings ? campaign_settings.home_image_url : ""
   end
 
+  def polls_close_time
+    @polls_close_time ||= campaign_settings && campaign_settings.election_time
+  end
+
   def campaign_script
     @campaign_script ||= campaign_settings ? campaign_settings.script_content_markdown : "Need to set a script!"
   end
 
   def campaign_settings
     @campaign_settings ||= CampaignSetting.current
+  end
+
+  def is_admin?
+    current_user && current_user.is_admin?
   end
 
   def markdown(text)
