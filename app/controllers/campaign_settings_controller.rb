@@ -18,7 +18,7 @@ class CampaignSettingsController < ApplicationController
     params.require(:campaign_setting).permit(
       :name, :home_image_url, :script_content_markdown,
       :voters_query, :users_query, :relationships_query,
-      :credentials_json)
+      :election_time, :credentials_json)
   end
 
   def require_admin

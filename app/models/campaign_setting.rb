@@ -1,4 +1,10 @@
 class CampaignSetting < ApplicationRecord
+  # We don't want the homepage countdown to be tz-aware since it generally
+  # is the same time of day regardless of timezone if a state is split across
+  # two timezones
+  self.skip_time_zone_conversion_for_attributes = [:election_time]
+  self.time_zone_aware_attributes = false
+
   def self.instantiate_if_not_exists!
     CampaignSetting.transaction do
       if CampaignSetting.count == 0
