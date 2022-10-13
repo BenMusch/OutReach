@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_001920) do
+ActiveRecord::Schema.define(version: 2022_10_13_220049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,9 @@ ActiveRecord::Schema.define(version: 2022_10_10_001920) do
     t.integer "household_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["household_id", "last_call_status"], name: "index_voters_on_household_id_and_last_call_status"
+    t.index ["household_id"], name: "index_voters_on_household_id"
+    t.index ["sos_id", "household_id"], name: "index_voters_on_sos_id_and_household_id"
   end
 
 end
