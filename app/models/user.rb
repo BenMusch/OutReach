@@ -15,12 +15,19 @@ class User < ApplicationRecord
   end
 
   def call_list
-    relationship_call_list
+    relationship_call_list + household_member_call_list
   end
 
   def non_self_voters
     Voter.where(sos_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_sos_id))
   end
+
+   def secondary_network
+    Voter.
+      where(household_id: voters.select(:household_id)).
+      where.
+      not(sos_id: voters.select(:sos_id))
+   end
 
   def calls_logged
     REDIS_CLIENT.get("user:#{id}:contacts").to_i
@@ -75,5 +82,13 @@ class User < ApplicationRecord
       where(sos_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_sos_id)).
       order(:sos_id).
       where(last_call_status: [:not_yet_called, :should_call_again])
+  end
+
+  def household_member_call_list
+    secondary_network.
+      order(:sos_id).
+      where(last_call_status: [:not_yet_called, :should_call_again]).
+      where.
+      not(sos_id: relationship_call_list.select(:sos_id))
   end
 end

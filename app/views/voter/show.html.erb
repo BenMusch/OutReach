@@ -1,6 +1,17 @@
 <section class="hero is-link">
   <div class="hero-body">
     <div class="container">
+      <% if @same_household_voter %>
+        <div id="household-voter" class="columns is-centered has-text-centered">
+          <div class="column is-narrow">
+            <span class="box has-text-white mini-info is-rounded">
+              <a id="household-badge" href="<%= voter_path @same_household_voter %>">
+                🏡&nbsp;<b><%= @same_household_voter.display_name %></b>'s household member
+              </a>
+            </span>
+          </div>
+        </div>
+      <% end %>
       <div class="columns is-centered has-text-centered">
         <div class="column is-half-tablet is-narrow-mobile">
           <p id="voter-name" class="title is-uppercase is-1 has-text-weight-normal mb-0">
@@ -69,6 +80,53 @@
           <p class="title">Conversation Guide</p>
           <div class="box content">
             <%= markdown(campaign_script) %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="column column is-full-tablet is-half-desktop">
+        <div id="household" class="columns">
+          <div class="column">
+            <div id="household-members">
+              <p class="title">Other members of <%= @voter.first_name.capitalize %>'s household</p>
+              <div id="bonus" class="mb-4">
+                <p>
+                  ✨ Bonus ✨ Call these people as well to increase our votes!
+                </p>
+              </div>
+              <div class="box contacts">
+                <div class="table-container">
+                  <table class="table is-fullwidth">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Number</th>
+                        <th>Vote plan</th>
+                        <th>Call Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if @voter.household_members.empty? %>
+                        <tr class="has-text-centered is-light p-5">
+                          <td colspan="6">No household members.</td>
+                        </tr>
+                      <% end %>
+                      <% @voter.household_members.each do |v| %>
+                        <tr>
+                          <td>
+                            <%= link_to v.display_name, voter_path(v) %>
+                          </td>
+                          <td><%= v.phone_number_display %></td>
+                          <td><%= v.vote_plan || "Unavailable" %></td>
+                          <td><%= v.last_call_status_display %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -39,6 +39,16 @@
       </div>
       <div class="column">
         <div class="box user-stat">
+            <p class="title">
+              <%= @secondary_contacts.size %>
+            </p>
+            <p class="subtitle stat-label">
+            Household member<%= @secondary_contacts.size != 1 ? "s" : "" %> of contacts
+            </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box user-stat">
           <p class="title">
             <%= @contacted_size %>
           </p>
@@ -96,6 +106,22 @@
                 <tr class="household-member label">
                   <td colspan="6">Other voters in contacts' households:</td>
                 </tr>
+                <% if @secondary_contacts.any? %>
+                  <% @secondary_contacts.each_with_index do |v| %>
+                    <tr>
+                      <td>
+                        <%= link_to v.display_name, voter_path(v) %>
+                      </td>
+                      <td class="nowrap"><%= v.phone_number_display %></td>
+                      <td><%= v.vote_plan || "Unavailable" %></td>
+                      <td><%= v.last_call_status_display %></td>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr class="has-text-centered is-light p-5">
+                    <td colspan="6">No household members to show. Data may be 15-20 minutes delayed for recent Reach updates.</td>
+                  </tr>
+                <% end %>
               </tbody>
             </table>
           </div>

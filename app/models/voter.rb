@@ -31,4 +31,8 @@ class Voter < ApplicationRecord
   def display_name
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
+
+  def household_members
+    Voter.where(household_id: household_id).where.not(sos_id: sos_id)
+  end
 end
