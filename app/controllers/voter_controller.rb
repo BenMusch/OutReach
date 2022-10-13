@@ -71,8 +71,17 @@ class VoterController < ApplicationController
 
   def authorize_and_set_contact
     return unless voter.relationships.where(user_id: current_user.id).empty?
-    flash[:danger] = "You don't have access to that voter's details"
-    redirect_back(fallback_location: root_path)
+    same_household_voter = voter.
+      household_members.
+      where(sos_id: current_user.relationships.select(:voter_sos_id)).
+      first
+
+    if same_household_voter
+      @same_household_voter = same_household_voter
+    else
+      flash[:danger] = "You don't have access to that voter's details"
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def record_in_reach(choice_id)

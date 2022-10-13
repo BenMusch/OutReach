@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_001920) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
+  # TODO: household_id indexes
   create_table "voters", primary_key: "sos_id", id: :string, force: :cascade do |t|
     t.string "reach_id"
     t.string "last_name"
