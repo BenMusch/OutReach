@@ -21,7 +21,7 @@
   "stack": "heroku-20",
   "description": "Virtual phone-bank on-top of your reach data",
   "scripts": {
-    "postdeploy": "bundle exec rails db:migrate"
+    "postdeploy": "bundle exec rails db:migrate import_users import_voters import_relationships"
   },
   "env": {
     "HEROKU_APP_NAME": {
