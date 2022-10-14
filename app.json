@@ -7,7 +7,7 @@
       "plan": "heroku-redis:hobby-dev"
     },
     {
-      "plan": "scheduler:standard",
+      "plan": "scheduler:standard"
     }
   ],
   "buildpacks": [
