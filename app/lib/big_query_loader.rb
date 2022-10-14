@@ -50,6 +50,7 @@ class BigQueryLoader
         first_name: row[:first_name],
         email_address: row[:email_address],
         phone_number: row[:phone_number],
+        is_admin: row[:is_admin]
       }
     end
     puts("Finished user import!")

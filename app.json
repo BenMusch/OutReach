@@ -5,6 +5,9 @@
     },
     {
       "plan": "heroku-redis:hobby-dev"
+    },
+    {
+      "plan": "scheduler:standard",
     }
   ],
   "buildpacks": [
@@ -31,10 +34,6 @@
     "CAMPAIGN_NAME": {
         "required": true,
         "description": "Name of the campaign (e.g. 'Biden 2020')"
-    },
-    "CAMPAIGN_ADMIN_PHONE_NUMBER": {
-        "required": true,
-        "description": "Phone number of the initial admin user"
     },
     "TWILIO_ACCOUNT_SID": {
         "required": true
@@ -64,6 +63,15 @@
     "BIGQUERY_CREDENTIALS_JSON": {
         "description": "JSON of bigquery creds",
         "required": true
+    },
+    "BIGQUERY_REACH_USERS_QUERY": {
+        "description": "Query for reach users"
+    },
+    "BIGQUERY_REACH_VOTERS_QUERY": {
+        "description": "Query for reach voters"
+    },
+    "BIGQUERY_REACH_RELATIONSHIPS_QUERY": {
+        "description": "Query for reach relationships"
     }
   }
 }

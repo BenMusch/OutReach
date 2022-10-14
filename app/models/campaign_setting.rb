@@ -8,7 +8,13 @@ class CampaignSetting < ApplicationRecord
   def self.instantiate_if_not_exists!
     CampaignSetting.transaction do
       if CampaignSetting.count == 0
-        CampaignSetting.create!
+        CampaignSetting.create!(
+          credentials_json: ENV["BIGQUERY_CREDENTIALS_JSON"],
+          name: ENV["CAMPAIGN_NAME"],
+          users_query: ENV["BIGQUERY_REACH_USERS_QUERY"],
+          voters_query: ENV["BIGQUERY_REACH_VOTERS_QUERY"],
+          relationships_query: ENV["BIGQUERY_REACH_RELATIONSHIPS_QUERY"],
+        )
       end
     end
   end
