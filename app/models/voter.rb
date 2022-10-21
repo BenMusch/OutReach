@@ -33,6 +33,10 @@ class Voter < ApplicationRecord
   end
 
   def household_members
-    Voter.where(household_id: household_id).where.not(sos_id: sos_id)
+    if household_id.nil?
+      Voter.none
+    else
+      Voter.where(household_id: household_id).where.not(sos_id: sos_id)
+    end
   end
 end

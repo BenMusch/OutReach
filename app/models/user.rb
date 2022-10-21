@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
    def secondary_network
     Voter.
-      where(household_id: voters.select(:household_id)).
+      where(household_id: voters.where.not(household_id: nil).select(:household_id)).
       where.
       not(sos_id: voters.select(:sos_id))
    end
