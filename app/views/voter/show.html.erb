@@ -54,13 +54,13 @@
       <div class="column is-narrow">
         <%= form_tag voter_path(@voter), method: :patch do %>
           <%= hidden_field_tag :last_call_status, "should_call_again" %>
-          <%= submit_tag "Contacted, can contact again", class: "button is-medium is-info is-light" %>
+          <%= submit_tag "Should follow-up", class: "button is-medium is-info is-light" %>
         <% end %>
       </div>
       <div class="column is-narrow">
         <%= form_tag voter_path(@voter), method: :patch do %>
           <%= hidden_field_tag :last_call_status, "successfully_completed" %>
-          <%= submit_tag "Vote plan finalized", class: "button is-medium is-success is-light" %>
+          <%= submit_tag "Vote plan finalized!", class: "button is-medium is-success is-light" %>
         <% end %>
       </div>
       <div class="column is-narrow">

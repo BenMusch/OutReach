@@ -12,8 +12,8 @@ class Voter < ApplicationRecord
 
   CALL_STATUS_TEXT = {
     not_yet_called: "Not called",
-    should_call_again: "Should call again",
-    do_not_call: "Don't call back",
+    should_call_again: "Need to follow up",
+    do_not_call: "Don't contact",
     successfully_completed: "Vote plan finalized",
   }.freeze
 
