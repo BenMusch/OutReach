@@ -92,6 +92,7 @@ class BigQueryLoader
         reach_id: row[:reach_id],
         sos_id: row[:sos_id],
         household_id: row[:household_id],
+        support_score: row[:support_score],
       }
     end
     puts("Finished voter import")

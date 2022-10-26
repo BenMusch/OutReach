@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_16_195908) do
+
+ActiveRecord::Schema.define(version: 2022_10_26_035247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(version: 2022_10_16_195908) do
     t.index ["household_id", "last_call_status"], name: "index_voters_on_household_id_and_last_call_status"
     t.index ["household_id"], name: "index_voters_on_household_id"
     t.index ["sos_id", "household_id"], name: "index_voters_on_sos_id_and_household_id"
+    t.index ["sos_id", "support_score"], name: "index_voters_on_sos_id_and_support_score"
   end
 
 end
