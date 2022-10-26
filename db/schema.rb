@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2022_10_26_035247) do
+ActiveRecord::Schema.define(version: 2022_10_26_194420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +26,8 @@ ActiveRecord::Schema.define(version: 2022_10_26_035247) do
     t.string "relationships_query"
     t.string "voters_query"
     t.datetime "election_time"
+    t.string "gtag"
+    t.string "reach_guide_url"
   end
 
   create_table "relationships", force: :cascade do |t|
