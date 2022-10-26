@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_220049) do
+ActiveRecord::Schema.define(version: 2022_10_16_195908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 2022_10_13_220049) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
-  # TODO: household_id indexes
   create_table "voters", primary_key: "sos_id", id: :string, force: :cascade do |t|
     t.string "reach_id"
     t.string "last_name"
@@ -76,7 +75,7 @@ ActiveRecord::Schema.define(version: 2022_10_13_220049) do
     t.integer "voter_data_status"
     t.integer "last_call_status", default: 0, null: false
     t.integer "support_score"
-    t.integer "household_id"
+    t.string "household_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["household_id", "last_call_status"], name: "index_voters_on_household_id_and_last_call_status"
