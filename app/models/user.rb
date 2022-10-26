@@ -18,6 +18,8 @@ class User < ApplicationRecord
     relationship_call_list + household_member_call_list
   end
 
+
+
   def non_self_voters
     Voter.where(sos_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_sos_id))
   end
@@ -64,9 +66,9 @@ class User < ApplicationRecord
     {}
   end
 
-  def log_voter!(reach_id)
+  def log_voter!(id_value)
     seen = seen_voters
-    seen[reach_id] = true
+    seen[id_value] = true
     set_voters!(seen)
   end
 
@@ -80,15 +82,19 @@ class User < ApplicationRecord
   def relationship_call_list
     Voter.
       where(sos_id: Relationship.where(user_id: id).where.not(relationship: 'Me').select(:voter_sos_id)).
-      order(:sos_id).
-      where(last_call_status: [:not_yet_called, :should_call_again])
+      order('support_score DESC, sos_id ASC').
+      where(last_call_status: [:not_yet_called, :should_call_again]).
+      where.
+      not(support_score: 0)
   end
 
   def household_member_call_list
     secondary_network.
-      order(:sos_id).
+      order('support_score DESC, sos_id ASC').
       where(last_call_status: [:not_yet_called, :should_call_again]).
       where.
-      not(sos_id: relationship_call_list.select(:sos_id))
+      not(sos_id: relationship_call_list.select(:sos_id)).
+      where.
+      not(support_score: 0)
   end
 end
