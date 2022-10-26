@@ -94,8 +94,8 @@
       </div>
     </section>
 
-<script>
 <% if polls_close_time %>
+<script>
 
 function zeroPadIfNeeded(val) {
     if (val < 10) {
@@ -144,7 +144,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
   startTimer(polls_close_time);
 });
 
-<% end %>
 </script>
+<% end %>
+
+<% if gtag %>
+  <!-- google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= gtag %>"></script>
+  <script>
+    window.datalayer = window.datalayer || [];
+    function gtag(){datalayer.push(arguments);}
+    gtag('js', new date());
+
+    gtag('config', '<%= gtag %>');
+  </script>
+<% end %>
 </body>
 </html>

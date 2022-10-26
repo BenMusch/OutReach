@@ -43,6 +43,22 @@
           </div>
 
           <div class="field">
+            <%= f.label :reach_guide_url, class: "label" %>
+            <div class="control">
+              <%= f.text_field :reach_guide_url, class: "input" %>
+            </div>
+            <p class="help">URL with instructions for organizers on how to use Reach</p>
+          </div>
+
+          <div class="field">
+            <%= f.label :gtag, "Google Analytics GTAG", class: "label" %>
+            <div class="control">
+              <%= f.text_field :gtag, class: "input" %>
+            </div>
+            <p class="help">GTAG value if using Google Analytics (Optional). Should look like G-XXXXXXXXX</p>
+          </div>
+
+          <div class="field">
             <%= f.label :script_content_markdown, class: "label" %>
             <div class="control">
               <%= f.text_area :script_content_markdown, class: "textarea" %>
