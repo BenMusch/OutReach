@@ -6,7 +6,7 @@ class Voter < ApplicationRecord
   has_many :relationships, foreign_key: :voter_sos_id
   has_many :users, through: :relationships
 
-  enum last_call_status: [ :not_yet_called, :should_call_again, :do_not_call ]
+  enum last_call_status: [ :not_yet_called, :should_call_again, :do_not_call, :successfully_completed ]
   enum voter_data_status: [:reach_match, :manual_match, :unmatched]
   enum voter_registration_status: [:registered_in_district, :registered_in_state, :registereted_out_of_state, :unregistered]
 
@@ -14,6 +14,7 @@ class Voter < ApplicationRecord
     not_yet_called: "Not called",
     should_call_again: "Should call again",
     do_not_call: "Don't call back",
+    successfully_completed: "Vote plan finalized",
   }.freeze
 
   def last_call_status_display
