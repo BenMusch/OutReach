@@ -30,7 +30,7 @@
             <span class="icon">
               <i class="fas fa-info-circle"></i>
             </span>
-            <span>This app excludes <%= pluralize @excluded_size, "voter" %> who <%= @excluded_size == 1 ? "is not a supporter or already voted" : "are unlikely supporters or already voted" %></span>
+            <span>This app excludes <%= pluralize @excluded_size, "voter" %> who <%= @excluded_size == 1 ? "is" : "are" %> not a <%= campaign_name %> turnout target or already voted</span>
           </span>
         <% end %>
       </div>
