@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def camapign_name
+  def campaign_name
     @campaign_name ||= campaign_settings.name ? campaign_settings.name : "Set Campaign Name!"
   end
 
