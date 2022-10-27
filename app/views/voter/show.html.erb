@@ -32,7 +32,7 @@
       </div>
       <div id="voter-facts" class="columns is-centered has-text-centered mt-4">
         <div class="column is-narrow">
-          📝 Plan: <%= @voter.vote_plan || "Unavailable" %>
+          🗳 Vote status: <%= @voter.voting_status || "Data unavailable" %>
         </div>
       </div>
       <% if @voter.polling_place_display %>
@@ -108,7 +108,7 @@
                       <tr>
                         <th>Name</th>
                         <th>Number</th>
-                        <th>Vote plan</th>
+                        <th>Vote Status</th>
                         <th>Call Status</th>
                       </tr>
                     </thead>
@@ -124,7 +124,7 @@
                             <%= link_to v.display_name, voter_path(v) %>
                           </td>
                           <td><%= v.phone_number_display %></td>
-                          <td><%= v.vote_plan || "Unavailable" %></td>
+                          <td><%= v.voting_status || "Data unavailable" %></td>
                           <td><%= v.last_call_status_display %></td>
                         </tr>
                       <% end %>
