@@ -33,7 +33,7 @@ class VoterController < ApplicationController
     end
 
     if next_voter.nil?
-      flash[:success] = "No voters to call, thanks for your help with #{CampaignSetting.current.campaign_name}!"
+      flash[:success] = "No voters to call, thanks for your help with #{CampaignSetting.current.name}!"
       redirect_to root_path
     else
       redirect_to next_voter
