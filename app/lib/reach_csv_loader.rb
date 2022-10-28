@@ -49,6 +49,7 @@ class ReachCsvLoader
         first_name: row["First Name"],
         last_name: row["Last Name"],
         id: row["User ID"],
+        is_admin: row["Role"] == "Admin" || row["Role"] == "Owner",
         phone_number: row["Phone Number"],
         email_address: row["Email Address"],
         created_at: Time.now,
@@ -62,15 +63,19 @@ class ReachCsvLoader
   def load_relationships(from: RELATIONSHIP_FILE_LOCATION)
     to_upsert = []
     ::CSV.foreach(from, headers: true) do |row|
+      unless row["State File ID"]
+        raise "Can't find state file ID, failing!"
+      end
+
       to_upsert << {
         user_id: row["User ID"],
-        voter_reach_id: row["Reach ID"],
+        voter_sos_id: row["Reach State File ID"],
         relationship: row["Relationship Type"],
         created_at: Time.now,
         updated_at: Time.now,
       }
     end
 
-    !Relationship.upsert_all(to_upsert.uniq { |r| "#{r[:user_id]} #{r[:voter_reach_id]}" }, unique_by: [:user_id, :voter_reach_id])
+    !Relationship.upsert_all(to_upsert.uniq { |r| "#{r[:user_id]} #{r[:voter_sos_id]}" }, unique_by: [:user_id, :voter_reach_id])
   end
 end
