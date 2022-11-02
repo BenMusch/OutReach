@@ -32,5 +32,6 @@ module Gotv
     config.reach    = config_for(:reach)
     config.rewards  = config_for(:rewards)
     config.bigquery = config_for(:bigquery)
+    config.active_job.queue_adapter = :delayed_job
   end
 end

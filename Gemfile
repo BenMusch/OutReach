@@ -22,6 +22,7 @@ gem "title"
 gem 'twilio-ruby'
 gem "tzinfo-data", platforms: [:mingw, :x64_mingw, :mswin, :jruby]
 gem "webpacker"
+gem "delayed_job_active_record"
 
 group :development do
   gem "listen"
