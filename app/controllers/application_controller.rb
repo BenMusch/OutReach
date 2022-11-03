@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :logged_in?
-  before_action :authorized
+
+  def index
+    redirect_to 'http://outreach.vote'
+  end
 
   def authorized
-    redirect_to '/login' unless logged_in?
+    redirect_to '/' unless logged_in?
   end
 
   def logged_in?
