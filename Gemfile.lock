@@ -342,7 +342,7 @@ DEPENDENCIES
   pry-rails
   puma
   rack-canonical-host
-  rack-mini-profiler
+  rack-mini-profiler (~> 3.0)
   rails (~> 6.0.0)
   rails_autoscale_agent (~> 0.9.1)
   recipient_interceptor

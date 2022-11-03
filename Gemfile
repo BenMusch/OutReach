@@ -23,7 +23,6 @@ gem 'twilio-ruby'
 gem "tzinfo-data", platforms: [:mingw, :x64_mingw, :mswin, :jruby]
 gem "webpacker"
 gem "delayed_job_active_record"
-gem "rack-mini-profiler"
 
 group :development do
   gem "listen"
@@ -66,3 +65,5 @@ gem "redis", "~> 4.2"
 gem "redcarpet", "~> 3.5"
 
 gem "google-cloud-bigquery", "~> 1.25"
+
+gem "rack-mini-profiler", "~> 3.0"
