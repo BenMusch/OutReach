@@ -14,12 +14,12 @@ class ReachCsvLoader
       address_line_2 = row["Address Line 2"]
 
       address = "#{address_line_1}#{address_line_2 ? ", #{address_line_2}" : ""}"
-      state_file_id = row["State File ID"]
+      state_file_id = row[CampaignSetting.current.reach_id_key]
 
       if state_file_id
         to_upsert << {
           reach_id: row["Reach ID"],
-          sos_id: row["State File ID"],
+          sos_id: state_file_id,
           voter_data_status: row["Source Tag"] == "Voter" ? :reach_match : :unmatched,
           voter_registration_status: row["Source Tag"] == "Voter" ? :registered_in_district : nil,
           first_name: row["First Name"],
@@ -68,7 +68,7 @@ class ReachCsvLoader
   def load_relationships(from: RELATIONSHIP_FILE_LOCATION)
     to_upsert = []
     ::CSV.foreach(from, headers: true) do |row|
-      state_file_id = row["State File ID"]
+      state_file_id = row[CampaignSetting.current.reach_id_key]
       if state_file_id
         to_upsert << {
           user_id: row["User ID"],

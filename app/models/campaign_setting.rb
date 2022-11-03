@@ -5,6 +5,8 @@ class CampaignSetting < ApplicationRecord
   self.skip_time_zone_conversion_for_attributes = [:election_time]
   self.time_zone_aware_attributes = false
 
+  enum voter_key: [ :van, :sos ]
+
   def self.instantiate_if_not_exists!
     CampaignSetting.transaction do
       if CampaignSetting.count == 0
@@ -35,6 +37,14 @@ class CampaignSetting < ApplicationRecord
       super(encrypted_value)
     else
       Rails.logger.info("Skipping update of credentials_json to non-present value")
+    end
+  end
+
+  def reach_id_key
+    if voter_key.present? && van?
+      "Voterfile VAN ID"
+    else
+      "State File ID"
     end
   end
 
