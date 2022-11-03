@@ -23,10 +23,10 @@ gem 'twilio-ruby'
 gem "tzinfo-data", platforms: [:mingw, :x64_mingw, :mswin, :jruby]
 gem "webpacker"
 gem "delayed_job_active_record"
+gem "rack-mini-profiler"
 
 group :development do
   gem "listen"
-  gem "rack-mini-profiler", require: false
   gem "web-console"
 end
 
